@@ -162,7 +162,7 @@ struct
       else if ucs4 <= 0x7ff then
         [(0xc0 lor (ucs4 lsr 6)); (0x80 lor (ucs4 land 0x3f))]
       else if ucs4 <= 0xffff then (
-        if (ucs4 >= 0xd800 & ucs4 < 0xe000) then 
+        if (ucs4 >= 0xd800 && ucs4 < 0xe000) then 
           raise IllegalCharacter;
         [(0xe0 lor (ucs4 lsr 12));
          (0x80 lor ((ucs4 lsr 6) land 0x3f));
@@ -337,7 +337,7 @@ let parse_document inc =
           Pervasives.exit 127          
         | M.Exn_CharToken u ->
           let chs = M.E.encode_unicode u in
-          let str = String.create (List.length chs) in
+          let str = Bytes.create (List.length chs) in
           let rec iteri i = function
             | [] -> ()
             | x :: xs -> str.[i] <- x; iteri (succ i) xs
